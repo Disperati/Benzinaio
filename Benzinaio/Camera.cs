@@ -54,15 +54,12 @@ namespace Benzinaio
                 {
                     if (t.nome == value)
                     {
-
                         idCamera = t.numeroCamera > 10 ? $"{t.identificativo}-{t.numeroCamera++}" :
                                                          $"{t.identificativo}-0{t.numeroCamera++}";
                         break;
                     }
-
                     throw new ArgumentException("Camera non Trovata");
                 }
-
             }
         }
 
@@ -80,8 +77,7 @@ namespace Benzinaio
         }
 
         public class Tipo
-        {
-            
+        {          
             public string nome { get; set; }
             public string identificativo { get; set; }
             public int numeroCamera { get; set; }
@@ -91,7 +87,6 @@ namespace Benzinaio
                 this.nome = nome;
                 this.identificativo = identificativo;
                 this.numeroCamera = 1;
-
             }
         }
     }
