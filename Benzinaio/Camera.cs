@@ -9,31 +9,36 @@ namespace Benzinaio
     public class Camera
     {
 
-        static Tipo[] tipo = { new Tipo("Singola", "S"),new Tipo("Doppia", "D"), new Tipo("Suite Reale", "X"),
-                        new Tipo("Bungolow", "B"), new Tipo("Tugurio", "U") };
+        private static string[] ElencoCamere = { "SINGOLA", "DOPPIA", "TRIPLA", "SUITE", "BUNGALOW", "TUGURIO" };
+        private static string[] ElencoEtichette = { "S", "D", "X", "B", "T" };
+        private  static int[] numeri = { 0, 0, 0, 0, 0 };
 
-        private string idCamera;  //"Es S-01, D-01, U-10 Prima Lettera indica il tipo - Due Cifre indicano il numero progressivo della camera."
-        private int nPosti;
+        private string id;  //"Es S-01, D-01, U-10 Prima Lettera indica il tipo - Due Cifre indicano il numero progressivo della camera."
+        private string nome; // valori consentiti  "SINGOLA", "DOPPIA", "TRIPLA", "SUITE", "BUNGALOW", "TUGURIO"
+        private string etichetta; // valori consentiti "S", "D", "X", "B", "T" 
+        private int nPosti; //valori consenti 1,2,3,4,5.
         private string[] optional;
-        private string tipoCamera;
-        private string etichetta;
+        
 
-        public Camera(String TipoCamera, int NPosti, params string[] opt)
+        public Camera(String Nome, int NPosti, params string[] opt)
         {
-            this.NPosti = nPosti;
+            this.Nome = Nome;
+            etichetta = ElencoEtichette[Array.IndexOf(ElencoCamere, Nome)];
+            id = numeri[Array.IndexOf(ElencoCamere, Nome)] >= 10 ? $"{Etichetta}-{numeri[Array.IndexOf(ElencoCamere, Nome)]++}":
+                                                                   $"{Etichetta}-0{numeri[Array.IndexOf(ElencoCamere, Nome)]++}";
+            this.NPosti = NPosti;
             Optional = opt;
-            IdCamera = TipoCamera;
-            this.TipoCamera = TipoCamera;
-            Etichetta = TipoCamera;
-
-
         }
+
+        //
+        public string Nome { get => nome; set => nome =  ElencoCamere.Contains(value) ? value : throw new ArgumentException("La Camera non Esiste"); }
+        public string Etichetta { get => etichetta; }
+        public string Id { get => id;  }
         public int NPosti
         {
             get { return nPosti; }
             set { nPosti = value >= 1 && value <= 5 ? value : throw new ArgumentException("Valore non Valido"); }
         }
-
         public string[] Optional { get => optional; set
             {
                 if (value.Length == 0)
@@ -46,48 +51,10 @@ namespace Benzinaio
                 }
             }
         }
-
-        public string TipoCamera { get => tipoCamera; set => tipoCamera = value; }
-        public string IdCamera { get => idCamera; set
-            {
-                foreach (Tipo t in tipo)
-                {
-                    if (t.nome == value)
-                    {
-                        idCamera = t.numeroCamera > 10 ? $"{t.identificativo}-{t.numeroCamera++}" :
-                                                         $"{t.identificativo}-0{t.numeroCamera++}";
-                        break;
-                    }
-                    throw new ArgumentException("Camera non Trovata");
-                }
-            }
-        }
-
-        public string Etichetta { get => etichetta; set
-            {
-                foreach (Tipo t in tipo)
-                    if (t.nome == value)
-                        etichetta = t.identificativo;
-            }
-        }
-
         public override string ToString()
         {
-            return $"Stampare Attributi ";
+            return $"Tipo Camera:{Nome} Numero:{id} Occupanti:{NPosti} Optional:{optional.ToString()}";
         }
 
-        public class Tipo
-        {          
-            public string nome { get; set; }
-            public string identificativo { get; set; }
-            public int numeroCamera { get; set; }
-
-            public Tipo(string nome, string identificativo)
-            {
-                this.nome = nome;
-                this.identificativo = identificativo;
-                this.numeroCamera = 1;
-            }
-        }
     }
 }
