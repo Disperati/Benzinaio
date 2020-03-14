@@ -9,15 +9,15 @@ namespace Benzinaio
     public class Camera
     {
 
-       static Tipo[] tipo = { new Tipo("Singola", "S"),new Tipo("Doppia", "D"), new Tipo("Suite Reale", "X"),
+        static Tipo[] tipo = { new Tipo("Singola", "S"),new Tipo("Doppia", "D"), new Tipo("Suite Reale", "X"),
                         new Tipo("Bungolow", "B"), new Tipo("Tugurio", "U") };
-       
+
         private string idCamera;  //"Es S-01, D-01, U-10 Prima Lettera indica il tipo - Due Cifre indicano il numero progressivo della camera."
         private int nPosti;
         private string[] optional;
         private string tipoCamera;
         private string etichetta;
-        
+
         public Camera(String TipoCamera, int NPosti, params string[] opt)
         {
             this.NPosti = nPosti;
@@ -26,9 +26,8 @@ namespace Benzinaio
             this.TipoCamera = TipoCamera;
             Etichetta = TipoCamera;
 
-            
-        }
 
+        }
         public int NPosti
         {
             get { return nPosti; }
